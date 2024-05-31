@@ -1,0 +1,247 @@
+Q.NO:1 What are the four access modifiers available in Java and what is their significance in terms of class, method, and variable accessibility?
+
+
+There are four access modifiers that determine the accessibility of classes, methods, and variables. These access modifiers are:
+
+Public (public)
+Protected (protected)
+Default (package-private, no modifier)
+Private (private)
+Here's a detailed look at each access modifier and their significance:
+
+1. Public (public)
+Class: A class declared as public is accessible from any other class in any package.
+Method: A public method is accessible from any other class in any package.
+Variable: A public variable is accessible from any other class in any package.
+2. Protected (protected)
+Class: Classes cannot be declared as protected. This modifier is not applicable to top-level classes.
+Method: A protected method is accessible within its own package (like default) and also by subclasses in other packages.
+Variable: A protected variable is accessible within its own package and also by subclasses in other packages.
+3. Default (package-private, no modifier)
+Class: A class with no access modifier (default) is accessible only within its own package.
+Method: A method with no access modifier is accessible only within its own package.
+Variable: A variable with no access modifier is accessible only within its own package.
+4. Private (private)
+Class: Classes cannot be declared as private. This modifier is not applicable to top-level classes.
+Method: A private method is accessible only within its own class.
+Variable: A private variable is accessible only within its own class.                                                        
+Public: Use public when you want the class, method, or variable to be accessible from any other class, which is common for API methods and classes.
+Protected: Use protected when you want to allow access to subclasses, often used in inheritance.
+Default (package-private): Use default access when you want to restrict access to within the same package, promoting encapsulation at the package level.
+Private: Use private to restrict access to the class itself, enforcing strict encapsulation.
+
+Q.NO:2  What is the difference between Exception and error?
+
+       In Java, both Exception and Error are subclasses of Throwable, but they serve different purposes and are used to handle different kinds of issues. Here are the main differences between Exception and Error:
+
+Exception
+Definition: Exception represents conditions that a reasonable application might want to catch. It is used for exceptional conditions that user programs should catch.
+Hierarchy: Exception is a subclass of Throwable.
+Types:
+Checked Exceptions: These are exceptions that are checked at compile time. The compiler ensures that your code handles these exceptions either with a try-catch block or by declaring the exception with a throws clause. Examples include IOException, SQLException, and ClassNotFoundException.
+Unchecked Exceptions (Runtime Exceptions): These exceptions are not checked at compile time but rather at runtime. They usually indicate programming bugs, such as logic errors or improper use of an API. Examples include NullPointerException, ArrayIndexOutOfBoundsException, and ArithmeticException.
+Handling: Applications are expected to catch and handle exceptions. Developers write code to handle exceptions and take appropriate actions like retrying an operation, logging the error, or providing user feedback.
+Error
+Definition: Error represents serious problems that a reasonable application should not try to catch. They are usually conditions that are outside the control of the application and often indicate a serious problem with the environment in which the application is running.
+Hierarchy: Error is also a subclass of Throwable.
+Examples: Examples of errors include OutOfMemoryError, StackOverflowError, and VirtualMachineError.
+Handling: Errors are typically not handled by application code because they usually indicate problems that the application cannot recover from. Instead, they are often handled by the JVM (Java Virtual Machine) itself, or they cause the program to terminate.
+Key Differences
+Purpose:
+
+Exception: Represents conditions that can be handled by the program.
+Error: Represents serious problems that are usually not recoverable by the program.
+Handling:
+
+Exception: Expected to be caught and handled by the application.
+Error: Usually not caught by the application as they generally indicate serious problems.
+Examples:
+
+Exception: IOException, SQLException, NullPointerException.
+Error: OutOfMemoryError, StackOverflowError, VirtualMachineError.
+
+Q.NO:3 What is the difference between chocked Exception and unchecked Exception?
+
+      Definition: Checked exceptions are exceptions that are checked at compile time. They must be either caught or declared in the method signature using the throws keyword.
+
+Handling Requirement: The compiler enforces handling of checked exceptions. If a method can throw a checked exception, it must either handle the exception using a try-catch block or declare the exception in its method signature.
+
+Examples: Common examples of checked exceptions include IOException, SQLException, and ClassNotFoundException.
+
+Purpose: They are used for conditions that the programmer can reasonably expect and can often recover from. For example, file operations (like reading a file) might fail due to the file not being found, and this condition should be handled by the programmer.
+ public void readFile(String fileName) throws IOException {
+    FileReader file = new FileReader(fileName);
+    BufferedReader fileInput = new BufferedReader(file);
+    fileInput.readLine();
+}
+Unchecked Exceptions
+Definition: Unchecked exceptions are exceptions that are not checked at compile time. They derive from RuntimeException or Error.
+
+Handling Requirement: The compiler does not enforce handling of unchecked exceptions. It is up to the programmer to handle them where appropriate, but there is no requirement to catch or declare them.
+
+Examples: Common examples of unchecked exceptions include NullPointerException, ArrayIndexOutOfBoundsException, and IllegalArgumentException.
+
+Purpose: They are used for programming errors that are usually indicative of bugs in the program, such as logic errors or improper use of an API. These are often considered fatal and not expected to be recovered from.
+public int divide(int a, int b) {
+    return a / b; // Can throw ArithmeticException if b is 0
+}
+Q.NO:4 Java program that reads two integers from the user, performs division, and handles the exception thrown when the second number is zero
+import java.util.Scanner;
+
+public class DivisionProgram {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter the first integer: ");
+            int num1 = scanner.nextInt();
+
+            System.out.print("Enter the second integer: ");
+            int num2 = scanner.nextInt();
+
+            // Perform the division
+            int result = divide(num1, num2);
+
+            // Display the result
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            // Handle division by zero
+            System.out.println("Error: Division by zero is not allowed.");
+        } finally {
+            // Close the scanner
+            scanner.close();
+        }
+    }
+
+    public static int divide(int a, int b) throws ArithmeticException {
+        return a / b;
+    }
+  }
+
+Q.NO:5  Write the code of ArrayIndexOutOfBoundsException & StringIndexOutOfBoundsException?
+
+
+ArrayIndexOutOfBoundsException
+
+
+public class ArrayIndexOutOfBoundsExceptionExample {
+    public static void main(String[] args) {
+        try {
+            int[] numbers = {1, 2, 3, 4, 5};
+            // Intentionally accessing an index out of bounds
+            int number = numbers[10];
+            System.out.println("Number at index 10: " + number);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("ArrayIndexOutOfBoundsException caught!");
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+StringIndexOutOfBoundsException
+
+   public class StringIndexOutOfBoundsExceptionExample {
+    public static void main(String[] args) {
+        try {
+            String str = "Hello, world!";
+            // Intentionally accessing an index out of bounds
+            char ch = str.charAt(20);
+            System.out.println("Character at index 20: " + ch);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("StringIndexOutOfBoundsException caught!");
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}
+
+Q.NO:6 
+
+ public class IncorrectPasswordException extends Exception {
+    public IncorrectPasswordException(String message) {
+        super(message);
+    
+
+public class LoginSystem {
+
+    // Assuming we have a method to get the stored password (for example purposes)
+    private String getStoredPasswordForUser(String username) {
+        // This method should retrieve the stored password for the given username from the database
+        return "correctPassword";  // Replace with actual password retrieval logic
+    }
+
+    public void login(String username, String password) throws IncorrectPasswordException {
+        String storedPassword = getStoredPasswordForUser(username);
+
+        if (!storedPassword.equals(password)) {
+            throw new IncorrectPasswordException("Incorrect password. Please try again.");
+        }
+
+        // Continue with the login process (e.g., setting session attributes)
+        System.out.println("Login successful!");
+    public class LoginDemo {
+    public static void main(String[] args) {
+        LoginSystem loginSystem = new LoginSystem();
+        String username = "user1";
+        String password = "wrongPassword";  // Simulate user input
+
+        try {
+            loginSystem.login(username, password);
+        } catch (IncorrectPasswordException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+Q.NO:7 
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("Enter your age: ");
+            int age = scanner.nextInt();
+
+            if (age < 15) {
+                throw new InvalidAgeException("Age must be 15 or older.");
+            }
+
+            System.out.println("Your age is: " + age);
+        } catch (InvalidAgeException e) {
+            System.err.println("InvalidAgeException: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
+Q.NO:8 
+
+  import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
+public class FileReadExample {
+    public static void main(String[] args) {
+        String filePath = "data.txt"; // Replace with the path to your file
+
+        try {
+            // Attempt to open and read the file
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            // Handle the case where the file does not exist
+            System.err.println("Error: The file '" + filePath + "' does not exist.");
+        } catch (IOException e) {
+            // Handle other I/O exceptions
+            System.err.println("Error: An I/O error occurred while reading the file.");
+        }
+    }
+}
+
